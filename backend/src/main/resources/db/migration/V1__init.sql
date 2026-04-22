@@ -1,0 +1,1 @@
+-- Initial migration placeholder for the Risk Register Import and Export Tool.
