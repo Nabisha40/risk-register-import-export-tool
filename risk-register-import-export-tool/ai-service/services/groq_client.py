@@ -9,26 +9,32 @@ load_dotenv()
 
 class GroqClient:
     def __init__(self):
-        # Change this line in groq_client.py
-        self.model = "llama-3.3-70b-versatile"
+        # 1. Properly retrieve the key from environment variables [cite: 106]
+        api_key = os.getenv("GROQ_API_KEY")
         
         if not api_key:
             raise ValueError("GROQ_API_KEY not found. Ensure your .env file is correct.")
         
-        # Pass the key explicitly to the Groq client
+        # 2. Initialize the client with the key
         self.client = Groq(api_key=api_key)
-        self.model = "llama-3.3-70b-specdec"
+        
+        # 3. Use the updated versatile model (the specdec one is decommissioned) 
+        self.model = "llama-3.3-70b-versatile"
 
     def get_completion(self, prompt_text):
         try:
             chat_completion = self.client.chat.completions.create(
                 messages=[{"role": "user", "content": prompt_text}],
                 model=self.model,
-                temperature=0.3, # Requirement for factual consistency [cite: 119]
+                # Requirement: 0.3 for factual consistency 
+                temperature=0.3, 
                 response_format={"type": "json_object"}
             )
             return json.loads(chat_completion.choices[0].message.content)
         except Exception as e:
             logging.error(f"AI Service Error: {e}")
-            # Fallback to prevent HTTP 500 [cite: 112]
-            return {"is_fallback": True, "description": "AI unavailable. Using fallback response."}
+            # Requirement: Return fallback JSON instead of HTTP 500 [cite: 112]
+            return {
+                "is_fallback": True, 
+                "description": "AI service is currently reaching capacity. Please try again later."
+            }
