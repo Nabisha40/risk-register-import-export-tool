@@ -30,6 +30,22 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(HttpStatus.CONFLICT, exception.getMessage(), request.getRequestURI());
     }
 
+    @ExceptionHandler(DuplicateUserException.class)
+    public ResponseEntity<ApiErrorResponse> handleDuplicateUser(
+        DuplicateUserException exception,
+        HttpServletRequest request
+    ) {
+        return buildErrorResponse(HttpStatus.CONFLICT, exception.getMessage(), request.getRequestURI());
+    }
+
+    @ExceptionHandler(AuthenticationFailedException.class)
+    public ResponseEntity<ApiErrorResponse> handleAuthenticationFailed(
+        AuthenticationFailedException exception,
+        HttpServletRequest request
+    ) {
+        return buildErrorResponse(HttpStatus.UNAUTHORIZED, exception.getMessage(), request.getRequestURI());
+    }
+
     @ExceptionHandler({InvalidRiskDataException.class, ConstraintViolationException.class})
     public ResponseEntity<ApiErrorResponse> handleInvalidRiskData(
         RuntimeException exception,
