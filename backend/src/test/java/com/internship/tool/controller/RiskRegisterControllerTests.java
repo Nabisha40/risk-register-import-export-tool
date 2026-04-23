@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.internship.tool.config.JwtAuthFilter;
 import com.internship.tool.dto.RiskRegisterRequest;
 import com.internship.tool.dto.RiskRegisterResponse;
 import com.internship.tool.exception.DuplicateRiskCodeException;
@@ -41,6 +42,9 @@ class RiskRegisterControllerTests {
 
     @MockBean
     private RiskRegisterService riskRegisterService;
+
+    @MockBean
+    private JwtAuthFilter jwtAuthFilter;
 
     @Test
     void shouldReturnPaginatedRiskRegisters() throws Exception {
