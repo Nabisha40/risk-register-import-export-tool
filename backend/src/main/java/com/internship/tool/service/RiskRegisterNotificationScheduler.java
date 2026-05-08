@@ -3,7 +3,7 @@ package com.internship.tool.service;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class RiskRegisterNotificationScheduler {
 
     private final EmailNotificationService emailNotificationService;

@@ -2,6 +2,10 @@ spring:
   application:
     name: risk-register-import-export-tool-backend
 
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+
   datasource:
     url: jdbc:postgresql://localhost:5432/riskdb
     username: postgres
@@ -31,3 +35,10 @@ management:
     web:
       exposure:
         include: health,info
+
+app:
+  jwt:
+    secret: mySecretKeyForJwtTokenGeneration123456
+    expiration-ms: 86400000
+    refresh-expiration-ms: 604800000
+    issuer: risk-register-app

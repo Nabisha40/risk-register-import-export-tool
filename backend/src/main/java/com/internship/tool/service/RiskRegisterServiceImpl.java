@@ -127,7 +127,22 @@ public class RiskRegisterServiceImpl implements RiskRegisterService {
         riskRegister.setActive(Boolean.FALSE);
         return mapToResponse(riskRegisterRepository.save(riskRegister));
     }
+    @Override
+@CacheEvict(
+    cacheNames = {
+        CacheConfig.RISK_REGISTER_BY_ID_CACHE,
+        CacheConfig.RISK_REGISTER_PAGE_CACHE
+    },
+    allEntries = true
+)
+public void deleteRiskRegister(Long id) {
 
+    RiskRegister riskRegister = getActiveRiskOrThrow(id);
+
+    riskRegister.setActive(Boolean.FALSE);
+
+    riskRegisterRepository.save(riskRegister);
+}
     private void validateRequest(RiskRegisterRequest request) {
         if (request == null) {
             throw new InvalidRiskDataException("Risk register request cannot be null");

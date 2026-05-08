@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-@Service
+//@Service
 public class EmailNotificationServiceImpl implements EmailNotificationService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailNotificationServiceImpl.class);
