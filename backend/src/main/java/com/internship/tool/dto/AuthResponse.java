@@ -1,17 +1,27 @@
 package com.internship.tool.dto;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
-@Builder
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class AuthResponse {
 
-    private final String tokenType;
-    private final String accessToken;
-    private final String refreshToken;
-    private final long expiresIn;
-    private final String email;
-    private final String fullName;
-    private final String role;
+    private String tokenType;
+
+    private String accessToken;
+
+    private String refreshToken;
+
+    private Long expiresIn;
+
+    private String email;
+
+    private String fullName;
+
+    private String role;
 }

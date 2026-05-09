@@ -2,7 +2,10 @@ package com.internship.tool.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.internship.tool.dto.*;
+import com.internship.tool.dto.AuthLoginRequest;
+import com.internship.tool.dto.AuthRefreshRequest;
+import com.internship.tool.dto.AuthRegisterRequest;
+import com.internship.tool.dto.AuthResponse;
 import com.internship.tool.service.AuthService;
 
 @Service
@@ -10,40 +13,59 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthResponse register(AuthRegisterRequest request) {
-        return AuthResponse.builder()
-                .tokenType("Bearer")
-                .accessToken("dummy-access-token")
-                .refreshToken("dummy-refresh-token")
-                .expiresIn(3600)
-                .email(request.getEmail())
-                .fullName(request.getFullName())
-                .role("USER")
-                .build();
+
+        AuthResponse response = new AuthResponse();
+
+        response.setTokenType("Bearer");
+        response.setAccessToken("dummy-access-token");
+        response.setRefreshToken("dummy-refresh-token");
+        response.setExpiresIn(3600L);
+
+        response.setEmail(request.getEmail());
+        response.setFullName(request.getFullName());
+
+        response.setRole("USER");
+
+        return response;
     }
 
     @Override
-    public AuthResponse login(AuthLoginRequest request) {
-        return AuthResponse.builder()
-                .tokenType("Bearer")
-                .accessToken("dummy-access-token")
-                .refreshToken("dummy-refresh-token")
-                .expiresIn(3600)
-                .email(request.getEmail())
-                .fullName("Demo User")
-                .role("USER")
-                .build();
-    }
+public AuthResponse login(AuthLoginRequest request) {
+
+    AuthResponse response = new AuthResponse();
+
+    response.setTokenType("Bearer");
+    response.setAccessToken("dummy-access-token");
+    response.setRefreshToken("dummy-refresh-token");
+    response.setExpiresIn(3600L);
+
+    response.setEmail(request.getEmail());
+    response.setFullName("Demo User");
+
+    response.setRole("USER");
+
+    return response;
+}
 
     @Override
     public AuthResponse refreshToken(AuthRefreshRequest request) {
-        return AuthResponse.builder()
-                .tokenType("Bearer")
-                .accessToken("new-access-token")
-                .refreshToken(request.getRefreshToken())
-                .expiresIn(3600)
-                .email("demo@mail.com")
-                .fullName("Demo User")
-                .role("USER")
-                .build();
+
+        AuthResponse response = new AuthResponse();
+
+        response.setTokenType("Bearer");
+        response.setAccessToken("new-access-token");
+
+        response.setRefreshToken(
+                request.getRefreshToken()
+        );
+
+        response.setExpiresIn(3600L);
+
+        response.setEmail("demo@mail.com");
+        response.setFullName("Demo User");
+
+        response.setRole("USER");
+
+        return response;
     }
 }
