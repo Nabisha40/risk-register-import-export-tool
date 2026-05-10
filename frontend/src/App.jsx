@@ -10,6 +10,8 @@ import Dashboard from "./pages/Dashboard";
 
 import RiskDetail from "./pages/RiskDetail";
 
+import RiskList from "./pages/RiskList";
+
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 import {
@@ -29,6 +31,15 @@ function App() {
           <Route
             path="/login"
             element={<Login />}
+          />
+
+          <Route
+            path="/risks"
+            element={
+              <ProtectedRoute>
+                <RiskList />
+              </ProtectedRoute>
+            }
           />
 
           <Route

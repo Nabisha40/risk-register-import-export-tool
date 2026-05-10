@@ -20,7 +20,7 @@ const Login = () => {
 
     await login(email, password);
 
-    navigate("/dashboard");
+    navigate("/risks");
   };
 
   return (
