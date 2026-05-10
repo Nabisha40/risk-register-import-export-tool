@@ -1,106 +1,64 @@
-import { useEffect, useState } from "react";
-import api from "../services/api";
+import KpiCard from "../components/KpiCard";
+import RiskChart from "../components/RiskChart";
 
 const Dashboard = () => {
 
-  const [risks, setRisks] = useState([]);
-  const [page, setPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(1);
+  const chartData = [
 
-  useEffect(() => {
-    fetchRisks(page);
-  }, [page]);
+    {
+      name: "High",
+      value: 5,
+    },
 
-  const fetchRisks = async (pageNumber) => {
+    {
+      name: "Medium",
+      value: 12,
+    },
 
-    try {
+    {
+      name: "Low",
+      value: 8,
+    },
 
-      const response = await api.get(
-        `/all?page=${pageNumber}&size=5`
-      );
-
-      console.log("API RESPONSE:", response.data);
-
-      const responseData = response.data;
-
-      setRisks(responseData.content || []);
-      setTotalPages(responseData.totalPages || 1);
-
-    } catch (error) {
-
-      console.log("ERROR:", error);
-
-    }
-  };
+  ];
 
   return (
 
-    <div style={{ padding: "20px" }}>
+    <div className="p-6">
 
-      <h1>Risk Register Dashboard</h1>
+      <h1 className="text-3xl font-bold mb-6">
+        Dashboard
+      </h1>
 
-      <table border="1" cellPadding="10">
+      <div className="grid grid-cols-4 gap-4">
 
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Risk Code</th>
-            <th>Title</th>
-            <th>Status</th>
-            <th>Priority</th>
-          </tr>
-        </thead>
+        <KpiCard
+          title="Total Risks"
+          value="25"
+        />
 
-        <tbody>
+        <KpiCard
+          title="High Risks"
+          value="5"
+        />
 
-          {risks.length > 0 ? (
+        <KpiCard
+          title="Medium Risks"
+          value="12"
+        />
 
-            risks.map((risk) => (
+        <KpiCard
+          title="Low Risks"
+          value="8"
+        />
 
-              <tr key={risk.id}>
+      </div>
 
-                <td>{risk.id}</td>
-                <td>{risk.riskCode}</td>
-                <td>{risk.title}</td>
-                <td>{risk.status}</td>
-                <td>{risk.priority}</td>
+      <div className="mt-10">
 
-              </tr>
-            ))
+        <RiskChart data={chartData} />
 
-          ) : (
-
-            <tr>
-              <td colSpan="5">
-                No Risks Found
-              </td>
-            </tr>
-
-          )}
-
-        </tbody>
-
-      </table>
-
-      <br />
-
-      <button
-        onClick={() => setPage(page - 1)}
-        disabled={page === 0}
-      >
-        Prev
-      </button>
-
-      <span style={{ margin: "0 20px" }}>
-        Page {page + 1} of {totalPages}
-      </span>
-
-      <button
-        onClick={() => setPage(page + 1)}
-        disabled={page + 1 >= totalPages}
-      >
-        Next
-      </button>
+      </div>
 
     </div>
   );
