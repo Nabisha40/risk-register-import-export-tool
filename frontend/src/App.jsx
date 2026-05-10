@@ -13,6 +13,8 @@ import RiskDetail from "./pages/RiskDetail";
 
 import RiskList from "./pages/RiskList";
 
+import Analytics from "./pages/Analytics";
+
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 import {
@@ -35,15 +37,6 @@ function App() {
           />
 
           <Route
-            path="/risks"
-            element={
-              <ProtectedRoute>
-                <RiskList />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
             path="/dashboard"
             element={
               <ProtectedRoute>
@@ -53,10 +46,28 @@ function App() {
           />
 
           <Route
+            path="/risks"
+            element={
+              <ProtectedRoute>
+                <RiskList />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
             path="/risk/:id"
             element={
               <ProtectedRoute>
                 <RiskDetail />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/analytics"
+            element={
+              <ProtectedRoute>
+                <Analytics />
               </ProtectedRoute>
             }
           />
