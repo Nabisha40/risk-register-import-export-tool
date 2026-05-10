@@ -2,6 +2,7 @@ package com.internship.tool.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import org.springframework.http.HttpMethod;
 
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,6 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.security.web.SecurityFilterChain;
+
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -29,6 +32,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
+
     private final UserDetailsService userDetailsService;
 
     public SecurityConfig(
@@ -47,8 +51,10 @@ public class SecurityConfig {
 
             .csrf(csrf -> csrf.disable())
 
-            .headers(headers -> headers
-                .frameOptions(frame -> frame.disable())
+            .headers(headers ->
+                headers.frameOptions(
+                    frame -> frame.disable()
+                )
             )
 
             .sessionManagement(session ->
@@ -60,15 +66,21 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
 
                 .requestMatchers(
+
                     "/auth/**",
-                    "/actuator/health",
-                    "/error",
+
+                    "/risk-registers/**",
 
                     "/swagger-ui/**",
                     "/swagger-ui.html",
                     "/v3/api-docs/**",
 
-                    "/h2-console/**"
+                    "/h2-console/**",
+
+                    "/actuator/**",
+
+                    "/error"
+
                 ).permitAll()
 
                 .requestMatchers(
@@ -79,7 +91,9 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             )
 
-            .authenticationProvider(authenticationProvider())
+            .authenticationProvider(
+                authenticationProvider()
+            )
 
             .addFilterBefore(
                 jwtAuthFilter,
